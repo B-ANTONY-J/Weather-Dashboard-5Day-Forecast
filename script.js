@@ -1,6 +1,7 @@
+
 const apiKey = "0765d126b0f6a7eb158764d733ae5823";
-var currWeatherDiv = $("#currentWeather");
-var forecastDiv = $("#weatherForecast");
+var currWeatherDiv = $("#upToDateWeather");
+var forecastDiv = $("#fiveDayForecast");
 var citiesArray;
 
 if (localStorage.getItem("localWeatherSearches")) {
@@ -11,7 +12,7 @@ if (localStorage.getItem("localWeatherSearches")) {
 };
 
 
-function returnCurrentWeather(cityName) {
+function returnUpToDateWeather(cityName) {
     let queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&APPID=${apiKey}`;
 
     $.get(queryURL).then(function(response){
@@ -28,7 +29,7 @@ function returnCurrentWeather(cityName) {
     })
 };
 
-function returnWeatherForecast(cityName) {
+function returnfiveDayForecast(cityName) {
     let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&APPID=${apiKey}`;
 
     $.get(queryURL).then(function(response){
@@ -69,7 +70,7 @@ function returnUVIndex(coordinates) {
         //Change UV background based on severity
         //Also change text colour for readability
         if (currUVIndex >= 11) {
-            uvSeverity = "aqua";
+            uvSeverity = "purple";
         } else if (currUVIndex >= 8) {
             uvSeverity = "red";
         } else if (currUVIndex >= 6) {
@@ -108,18 +109,18 @@ function writeSearchHistory(array) {
 }
 
 // Get a deafult weather search
-returnCurrentWeather("Fairburn");
-returnWeatherForecast("Fairburn");
+returnUpToDateWeather("Fairburn");
+returnfiveDayForecast("Fairburn");
 
 $("#submitCity").click(function() {
     event.preventDefault();
     let cityName = $("#cityInput").val();
-    returnCurrentWeather(cityName);
-    returnWeatherForecast(cityName);
+    returnUpToDateWeather(cityName);
+    returnfiveDayForecast(cityName);
 });
 
 $("#previousSearch").click(function() {
     let cityName = event.target.value;
-    returnCurrentWeather(cityName);
-    returnWeatherForecast(cityName);
+    returnUpToDateWeather(cityName);
+    returnfiveDayForecast(cityName);
 })
